@@ -30,18 +30,22 @@ $(document).ready(function () {
             function getResult(number) {
                 // fishing values from the response JSON object
                 for (var i = 0; i < number; i++) {
+                    
                     var doc = result.response.docs[i];
-                    var authorData = doc.byline.original;
+                    console.log(doc);
+                    //there are articles without Author which the below if will catch them
+                    if(doc.byline){ var authorData = doc.byline.original;}
+                    else { var authorData = "" }
                     var titleData = doc.headline.main;
                     var dateData = doc.pub_date;;
                     var linkData = doc.web_url;
-                    console.log(author, title, date, link);
 
                     // dynamically creating html element for the values using jQuery
                     var title = $(`<div id="title"><strong>${titleData}</strong></div>`);
                     var author = $(`<div id="Author">${authorData}</div>`);
                     var date = $(`<div id="date">${dateData}</div>`);
                     var link = $(`<a id="link" href="${linkData}">${linkData}</a><br><hr>`);
+                    console.log(author, title, date, link);
 
                     // appending the results to html
                     $("#results").append(title, author, date, link)
